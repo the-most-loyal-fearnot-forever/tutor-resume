@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家教履歷</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px 0 40px;
+            text-align: center;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            margin: 0 auto 20px auto;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .highlight-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+        
+        nav {
+            background: rgba(255,255,255,0.15);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        section {
+            margin-bottom: 50px;
+            scroll-margin-top: 20px;
+        }
+        
+        section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+        
+        section h2::before {
+            content: '●';
+            margin-right: 12px;
+            font-size: 0.8em;
+        }
+        
+        .education-item {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .education-item strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        td {
+            text-align: center;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9ff;
+        }
+        
+        .score-perfect {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .experience-section-title {
+            color: #764ba2;
+            font-size: 1.2em;
+            margin: 25px 0 10px 0;
+            font-weight: 600;
+        }
+        
+        .process-steps {
+            counter-reset: step;
+        }
+        
+        .process-step {
+            counter-increment: step;
+            position: relative;
+            padding: 20px 20px 20px 60px;
+            margin-bottom: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+        
+        .process-step::before {
+            content: counter(step);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .strengths-list {
+            list-style: none;
+        }
+        
+        .strengths-list li {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .strengths-list strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .info-card {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .info-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .contact-section h2 {
+            color: white;
+            border-bottom: 3px solid rgba(255,255,255,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .contact-item strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            section h2 {
+                font-size: 1.4em;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 10px 5px;
+            }
+            
+            nav {
+                padding: 10px;
+            }
+            
+            nav a {
+                font-size: 0.85em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://i.imgur.com/g4o6MkU.jpeg" alt="個人照片" class="profile-image">
+            <p class="subtitle">台大醫學系 | 頂尖成績 | 豐富教學經驗</p>
+            <div class="highlight-badge">✨ 多位學生考取醫學系 ✨</div>
+            
+            <nav>
+                <a href="#education">學歷背景</a>
+                <a href="#scores">升學考試成績</a>
+                <a href="#experience">教學相關經驗</a>
+                <a href="#process">實際教學流程</a>
+                <a href="#strengths">教學強項</a>
+                <a href="#subjects">教學科目與對象</a>
+                <a href="#contact">聯絡方式</a>
+            </nav>
+        </header>
+        
+        <div class="content">
+            <!-- 學歷 -->
+            <section id="education">
+                <h2>學歷背景</h2>
+                <div class="education-item">
+                    <strong>高中：</strong>建國中學
+                </div>
+                <div class="education-item">
+                    <strong>大學：</strong>陽明交大醫學系(112學年度) → 台大醫學系(目前二年級)
+                </div>
+            </section>
+            
+            <!-- 升學考試成績 -->
+            <section id="scores">
+                <h2>升學考試成績</h2>
+                <h3 style="color: #764ba2; margin: 20px 0 10px 0;">113學測</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>科目</th>
+                            <th>15級分制</th>
+                            <th>60級分制</th>
+                            <th>原始分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>國文</strong></td>
+                            <td class="score-perfect">15</td>
+                            <td>58</td>
+                            <td>76.57</td>
+                        </tr>
+                        <tr>
+                            <td><strong>英文</strong></td>
+                            <td class="score-perfect">15</td>
+                            <td>59</td>
+                            <td>90.75</td>
+                        </tr>
+                        <tr>
+                            <td><strong>數學A</strong></td>
+                            <td class="score-perfect">15</td>
+                            <td class="score-perfect">60</td>
+                            <td>96</td>
+                        </tr>
+                        <tr>
+                            <td><strong>自然</strong></td>
+                            <td class="score-perfect">15</td>
+                            <td class="score-perfect">60</td>
+                            <td>120.3</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3 style="color: #764ba2; margin: 30px 0 10px 0;">113分科</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>科目</th>
+                            <th>60級分制</th>
+                            <th>原始分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>數學甲</strong></td>
+                            <td>59</td>
+                            <td>92</td>
+                        </tr>
+                        <tr>
+                            <td><strong>物理</strong></td>
+                            <td>56</td>
+                            <td>83.5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>化學</strong></td>
+                            <td class="score-perfect">60</td>
+                            <td>99</td>
+                        </tr>
+                        <tr>
+                            <td><strong>生物</strong></td>
+                            <td class="score-perfect">60</td>
+                            <td>92.4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- 教學相關經驗 -->
+            <section id="experience">
+                <h2>教學相關經驗</h2>
+                
+                <div class="experience-section-title">儒林補習班1對1解題：9小時</div>
+                
+                <div class="experience-section-title">儒林補習班1對1課業進度輔導</div>
+                <p style="margin-bottom: 15px;">案例如下表：</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>學生姓名</th>
+                            <th>原高中</th>
+                            <th>成效</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>許O恩</td>
+                            <td>薇閣中學</td>
+                            <td><strong>113年學測60級分錄取陽明牙醫</strong></td>
+                        </tr>
+                        <tr>
+                            <td>徐O彤</td>
+                            <td>新竹女中</td>
+                            <td><strong>113年學測56級分錄取中山醫學系</strong></td>
+                        </tr>
+                        <tr>
+                            <td>鄭O綸</td>
+                            <td>華江高中</td>
+                            <td>學測進步級分：25→30</td>
+                        </tr>
+                        <tr>
+                            <td>張O郁</td>
+                            <td>北一女中</td>
+                            <td><strong>學測進步級分：49→59；錄取北醫醫學系</strong></td>
+                        </tr>
+                        <tr>
+                            <td>陳O樺</td>
+                            <td>薇閣中學</td>
+                            <td><strong>學測進步級分：56→59；指導備審資料撰寫，錄取長庚醫學系</strong></td>
+                        </tr>
+                        <tr>
+                            <td>葉O齊</td>
+                            <td>淡江高中</td>
+                            <td>課業進度輔導</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="experience-section-title">私人家教經驗</div>
+                <p style="margin-bottom: 15px;">案例如下表：</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>學生姓名</th>
+                            <th>高中</th>
+                            <th>教學業務內容</th>
+                            <th>錄取校系</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>虞O丞</td>
+                            <td>成功高中</td>
+                            <td>多益考試陪讀</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>陳O允</td>
+                            <td>基隆高中</td>
+                            <td>學測範圍數學</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>徐O彤</td>
+                            <td>新竹女中</td>
+                            <td>學測範圍空間向量</td>
+                            <td><strong>中山醫學系</strong></td>
+                        </tr>
+                        <tr>
+                            <td>高O凱</td>
+                            <td>台南一中</td>
+                            <td>選修化學的氧化還原、有機、無機</td>
+                            <td><strong>成大醫學系</strong></td>
+                        </tr>
+                        <tr>
+                            <td>陶O群</td>
+                            <td>成功高中</td>
+                            <td>學測範圍數、物、化</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>羅O琳</td>
+                            <td>師大附中</td>
+                            <td>學測、分科範圍的數學解題</td>
+                            <td><strong>中國中醫甲</strong></td>
+                        </tr>
+                        <tr>
+                            <td>詹O學</td>
+                            <td>國中生</td>
+                            <td>國中生物、理化</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>楊O亨</td>
+                            <td>道明高中</td>
+                            <td>學測範圍數、化，課業進度輔導</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- 實際教學流程 -->
+            <section id="process">
+                <h2>實際教學流程</h2>
+                <p style="color: #666; margin-bottom: 20px;">以學測自然組考生為例</p>
+                <div class="process-steps">
+                    <div class="process-step">
+                        首堂課依訪談或考卷訂正，評估學生各章節熟悉度
+                    </div>
+                    <div class="process-step">
+                        與學生洽談採用「解題、教部分弱點單元」或「全範圍教學」何種上課方式
+                    </div>
+                    <div class="process-step">
+                        訂定首月教學進度、提出考前讀書建議
+                    </div>
+                    <div class="process-step">
+                        進入教學環節，理論與題目教學並重
+                    </div>
+                    <div class="process-step">
+                        考前一至兩個月進行模擬考或歷屆試題的限時速度訓練，模擬實戰情境
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 教學強項 -->
+            <section id="strengths">
+                <h2>教學強項</h2>
+                <ul class="strengths-list">
+                    <li>
+                        <strong>1. 教材：</strong>
+                        自備，理論部分均為「投入家教後，考量平均學生程度與考試重點，所撰寫之筆記」；題目部分均為「依個人經驗蒐集個人備考時期所認定的經典題型或必備知識」。
+                    </li>
+                    <li>
+                        <strong>2. 理論教學：</strong>
+                        善於培養學生建立「依重要性建構知識層級」的能力，且會依學生理解程度適時推導公式。
+                    </li>
+                    <li>
+                        <strong>3. 題目教學：</strong>
+                        安排於理論教學之後,會依題目難易度，不同程度地引導學生解題。解題時著重說明題目敘述與理論觀念的連結，讓學生對考點的重要性有清晰認識。
+                    </li>
+                    <li>
+                        <strong>4. 讀書進度安排：</strong>
+                        如「教學相關經驗」一欄所呈現，我曾多次配合學生要求，在「有限自習時間」，利用「盡量少的題本、考卷」，達到成績最大進步幅度。
+                    </li>
+                </ul>
+            </section>
+            
+            <!-- 教學科目與對象 -->
+            <section id="subjects">
+                <h2>教學科目與對象</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <strong>對象</strong>
+                        <p>高中生、當年度學測/分科測驗考生</p>
+                    </div>
+                    <div class="info-card">
+                        <strong>科目</strong>
+                        <p>高中數學、物理、化學</p>
+                    </div>
+                    <div class="info-card">
+                        <strong>上課形式</strong>
+                        <p>一對一實體／線上</p>
+                    </div>
+                    <div class="info-card">
+                        <strong>上課地點</strong>
+                        <p>與「萬華車站」或「台大醫學院」或「台大校總區」以任何交通方式通勤不超過30分鐘</p>
+                    </div>
+                </div>
+                <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #ffc107;">
+                    <strong style="color: #856404;">💰 薪資說明：</strong>
+                    <p style="color: #856404; margin-top: 8px;">陪讀/教學鐘點費均可議，試教時半價；出示中低收入戶證明可適量減價</p>
+                </div>
+            </section>
+            
+            <!-- 聯絡方式 -->
+            <section id="contact">
+                <div class="contact-section">
+                    <h2>聯絡方式</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <strong>LINE ID</strong>
+                            <a href="https://line.me/ti/p/namasayakontol">namasayakontol</a>
+                        </div>
+                        <div class="contact-item">
+                            <strong>電子郵件</strong>
+                            <a href="mailto:0218wei@gmail.com">0218wei@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <strong>電話</strong>
+                            <a href="tel:0972090892">0972-090-892</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
